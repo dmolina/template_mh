@@ -22,7 +22,8 @@ public:
    *
    * @param problem The problem to be optimized
    * @param maxevals Maximum number of evaluations allowed
+   * @param theoric_min Early stops when the theoretical minimum fitness is found.
    * @return A pair containing the best solution found and its fitness
    */
-  ResultMH optimize(Problem *problem, int maxevals) override;
+  ResultMH optimize(Problem *problem, int maxevals, tFitness theoric_min) override;
 };
