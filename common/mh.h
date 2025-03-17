@@ -27,6 +27,7 @@ public:
    *
    * @param problem  The problem to solve.
    * @param maxevals The maximum number of evaluations.
+   * @param theoric_min Early stops when the theoretical minimum fitness is found.
    * @return A pair containing the optimal solution and its fitness.
    * @throws Exception if the algorithm fails to converge.
    *
@@ -34,5 +35,5 @@ public:
    * @author  author
    * @version 1.0
    */
-  virtual ResultMH optimize(Problem *problem, int maxevals) = 0;
+  virtual ResultMH optimize(Problem *problem, int maxevals, tFitness theoric_min) = 0;
 };
