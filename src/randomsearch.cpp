@@ -9,9 +9,10 @@ using namespace std;
  *
  * @param problem The problem to be optimized
  * @param maxevals Maximum number of evaluations allowed
+ * @param theoric_min Early stops when the theoretical minimum fitness is found.
  * @return A pair containing the best solution found and its fitness
  */
-ResultMH RandomSearch::optimize(Problem *problem, int maxevals) {
+ResultMH RandomSearch::optimize(Problem *problem, int maxevals, tFitness theoric_min) {
   assert(maxevals > 0);
   tSolution best;
   tFitness best_fitness = -1;
@@ -24,6 +25,9 @@ ResultMH RandomSearch::optimize(Problem *problem, int maxevals) {
       best = solution;
       best_fitness = fitness;
     }
+
+    if (best_fitness == theoric_min) break;
+    
   }
 
   return ResultMH(best, best_fitness, maxevals);
