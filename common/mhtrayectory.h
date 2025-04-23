@@ -1,7 +1,7 @@
+#pragma once
 #include <mh.h>
 
 /**
- *
  * Trayectory-based metaheuristic algorithm interface.
  */
 class MHTrayectory : public MH {
