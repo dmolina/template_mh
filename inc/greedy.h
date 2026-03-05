@@ -10,7 +10,12 @@ using namespace std;
  * @see MH
  * @see Problem
  */
-class GreedySearch : public MH {
+// Instanciamos la plantilla con el tipo que nos interese
+using MHInt = MH<int>;
+using ProblemInt = Problem<int>;
+using ResultMHInt = ResultMH<int>;
+
+class GreedySearch : public MHInt {
 
 public:
   GreedySearch() : MH() {}
@@ -24,5 +29,5 @@ public:
    * @param maxevals Maximum number of evaluations allowed
    * @return A pair containing the best solution found and its fitness
    */
-  ResultMH optimize(Problem *problem, int maxevals) override;
+  virtual ResultMH<int> optimize(Problem<int> &problem, int maxevals);
 };

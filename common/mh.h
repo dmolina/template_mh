@@ -1,14 +1,15 @@
 #pragma once
 
-#include <problem.h>
+#include "problem.h"
 #include <utility>
 
+template <typename tDomain>
 struct ResultMH {
-  tSolution solution;
+  tSolution<tDomain> solution;
   tFitness fitness;
   unsigned int evaluations;
 
-  ResultMH(tSolution &sol, tFitness fit, unsigned evals)
+  ResultMH(tSolution<tDomain> &sol, tFitness fit, unsigned evals)
       : solution(sol), fitness(fit), evaluations(evals) {}
 };
 
@@ -19,6 +20,8 @@ struct ResultMH {
  * @version 1.0
  * @since   2021-05-01
  */
+
+template <typename tDomain>
 class MH {
 public:
   virtual ~MH() {}
@@ -34,5 +37,5 @@ public:
    * @author  author
    * @version 1.0
    */
-  virtual ResultMH optimize(Problem *problem, int maxevals) = 0;
+  virtual ResultMH<tDomain> optimize(Problem<tDomain> &problem, int maxevals) = 0;
 };

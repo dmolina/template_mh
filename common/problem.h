@@ -2,7 +2,7 @@
 #define __PROBLEM_H
 
 #include "solution.h"
-#include <random.hpp>
+#include "random.hpp"
 #include <utility>
 
 // get base random alias which is auto seeded and has static API and internal
@@ -14,8 +14,9 @@ using Random = effolkronium::random_static;
  *
  * The idea is to inherit from this class for specific problems.
  */
+template<typename tDomain>
 class SolutionFactoringInfo {
-  virtual ~SolutionFactoringInfo() = default; // Default destructor
+    virtual ~SolutionFactoringInfo() = default; // Default destructor
 };
 
 /**
@@ -24,6 +25,7 @@ class SolutionFactoringInfo {
  * @author your_name
  * @version 1.0
  */
+template<typename tDomain>
 class Problem {
 public:
   Problem() {}
@@ -32,7 +34,7 @@ public:
    * Evaluate the solution from scratch.
    * @param solution to evaluate.
    */
-  virtual tFitness fitness(const tSolution &solution) = 0;
+  virtual tFitness fitness(const tSolution<tDomain> &solution) = 0;
   /**
    * Evaluate the solution indicating the current position to change and the new
    * value.
@@ -46,10 +48,10 @@ public:
    * @param pos_change position of the solution to change.
    * @param new_value to store in pos_previous.
    */
-  virtual tFitness fitness(const tSolution &solution,
-                           SolutionFactoringInfo *solution_info,
+  virtual tFitness fitness(const tSolution<tDomain> &solution,
+                           SolutionFactoringInfo<tDomain> *solution_info,
                            unsigned pos_change, tDomain new_value) {
-    tSolution newsol(solution);
+    auto newsol(solution);
     newsol[pos_change] = new_value;
     return fitness(newsol);
   }
@@ -60,9 +62,9 @@ public:
    *
    * @return the solution information.
    */
-  virtual SolutionFactoringInfo *
-  generateFactoringInfo(const tSolution &solution) {
-    return new SolutionFactoringInfo();
+  virtual SolutionFactoringInfo<tDomain> *
+  generateFactoringInfo(const tSolution<tDomain> &solution) {
+    return new SolutionFactoringInfo<tDomain>();
   }
 
   /**
@@ -73,15 +75,15 @@ public:
    * @param pos_change position of the solution to change.
    * @param new_value to store in pos_previous.
    */
-  virtual void updateSolutionFactoringInfo(SolutionFactoringInfo *solution_info,
-                                           const tSolution &solution,
+  virtual void updateSolutionFactoringInfo(SolutionFactoringInfo<tDomain> *solution_info,
+                                           const tSolution<tDomain> &solution,
                                            unsigned pos_change,
                                            tDomain new_value) {}
 
   /**
    * Create a new solution.
    */
-  virtual tSolution createSolution() = 0;
+  virtual tSolution<tDomain> createSolution() = 0;
   /**
    * Return the current size of the solution.
    */

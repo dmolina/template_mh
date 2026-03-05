@@ -10,10 +10,10 @@ using namespace std;
  * @see MH
  * @see Problem
  */
-class RandomSearch : public MH {
+template <typename tDomain> class RandomSearch : public MH<tDomain> {
 
 public:
-  RandomSearch() : MH() {}
+  RandomSearch() : MH<tDomain>() {}
   virtual ~RandomSearch() {}
   // Implement the MH interface methods
   /**
@@ -24,5 +24,21 @@ public:
    * @param maxevals Maximum number of evaluations allowed
    * @return A pair containing the best solution found and its fitness
    */
-  ResultMH optimize(Problem *problem, int maxevals) override;
+  ResultMH<int> optimize(Problem<int> &problem, int maxevals) override {
+    assert(maxevals > 0);
+    tSolution<tDomain> best;
+    tFitness best_fitness = -1;
+
+    for (int i = 0; i < maxevals; i++) {
+      auto solution = problem.createSolution();
+      tFitness fitness = problem.fitness(solution);
+
+      if (fitness < best_fitness || best_fitness < 0) {
+        best = solution;
+        best_fitness = fitness;
+      }
+    }
+
+    return ResultMH(best, best_fitness, maxevals);
+  }
 };

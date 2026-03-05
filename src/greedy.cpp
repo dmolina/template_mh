@@ -22,14 +22,14 @@ template <class T> void print_vector(string name, const vector<T> &sol) {
  * @param maxevals Maximum number of evaluations allowed
  * @return A pair containing the best solution found and its fitness
  */
-ResultMH GreedySearch::optimize(Problem *problem, int maxevals) {
+ResultMHInt GreedySearch::optimize(ProblemInt &problem, int maxevals) {
   assert(maxevals > 0);
   vector<tOption> values;
-  ProblemIncrem *realproblem = dynamic_cast<ProblemIncrem *>(problem);
-  tSolution sol(problem->getSolutionSize());
+  ProblemIncrem realproblem = dynamic_cast<ProblemIncrem &>(problem);
+  tSolution<int> sol(problem.getSolutionSize());
   print_vector("sol_initial", sol);
 
-  auto size = problem->getSolutionSize();
+  auto size = problem.getSolutionSize();
 
   for (int i = 0; i < size; i++) {
     values.push_back(i);
@@ -51,7 +51,7 @@ ResultMH GreedySearch::optimize(Problem *problem, int maxevals) {
     values[posi_int] = values.back();
     values.pop_back();
   }
-
-  tFitness fitness = problem->fitness(sol);
+  
+  tFitness fitness = problem.fitness(sol);
   return ResultMH(sol, fitness, 1);
 }
