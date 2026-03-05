@@ -24,7 +24,7 @@ template <class T> void print_vector(string name, const vector<T> &sol) {
  */
 ResultMHInt GreedySearch::optimize(ProblemInt &problem, int maxevals) {
   assert(maxevals > 0);
-  vector<tOption> values;
+  vector<bool> values;
   ProblemIncrem realproblem = dynamic_cast<ProblemIncrem &>(problem);
   tSolution<int> sol(problem.getSolutionSize());
   print_vector("sol_initial", sol);
