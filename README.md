@@ -102,9 +102,9 @@ using ProblemInt = Problem<int>;
 using ResultMHInt = ResultMH<int>;
 
 ResultMHInt GreedySearch::optimize(ProblemInt &p, int maxevals) {
-  auto size = p->getSolutionSize();
+  auto size = p.getSolutionSize();
   vector<int> values(size); iota(values.begin(), values.end(), 0);
-  tSolution sol(size, 0);
+  tSolution<int> sol(size, 0);
   
   for(int r = 0; r < size/2; r++) {
     // Heuristic: prefer even indices
