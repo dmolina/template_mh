@@ -83,8 +83,8 @@ Return type from `optimize()`: `{solution, fitness, evaluations}`
 
 ### Random Search (`RandomSearch`)
 ```cpp
-ResultMH RandomSearch::optimize(Problem *p, int maxevals) {
-  tSolution best; float best_fit = -1;
+ResultMH RandomSearch::optimize(Problem<tDomain> &p, int maxevals) {
+  tSolution<tDomain> best; float best_fit = -1;
   for(int i=0; i<maxevals; i++) {
     auto sol = p->createSolution(); // Random binary vector
     auto fit = p->fitness(sol);
@@ -94,9 +94,14 @@ ResultMH RandomSearch::optimize(Problem *p, int maxevals) {
 }
 ```
 
+This algorithm is generic, because it could be applied without changes to different representations.
+
 ### Greedy Search (`GreedySearch`)
 ```cpp
-ResultMH GreedySearch::optimize(Problem *p, int maxevals) {
+using ProblemInt = Problem<int>;
+using ResultMHInt = ResultMH<int>;
+
+ResultMHInt GreedySearch::optimize(ProblemInt &p, int maxevals) {
   auto size = p->getSolutionSize();
   vector<int> values(size); iota(values.begin(), values.end(), 0);
   tSolution sol(size, 0);
@@ -111,22 +116,7 @@ ResultMH GreedySearch::optimize(Problem *p, int maxevals) {
 }
 ```
 
-### Brute Force (`BruteSearch`)
-```cpp
-ResultMH BruteSearch::optimize(Problem *p, int maxevals) {
-  tSolution sol(p->getSolutionSize(), false);
-  tFitness best_fit = p->fitness(sol);
-  tSolution best = sol;
-  
-  for(int i=1; i<maxevals; i++) {
-    // Increment binary solution like a counter
-    // ... (bit manipulation logic)
-    auto fit = p->fitness(sol);
-    if(fit < best_fit) { best_fit = fit; best = sol; }
-  }
-  return {best, best_fit, maxevals};
-}
-```
+This algorithm is not generic, so it does not a template.
 
 ---
 
