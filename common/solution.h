@@ -15,11 +15,6 @@ template<typename tDomain>
 using tSolution = std::vector<tDomain>;
 
 /**
- * Represent a new option to create the solution for the heuristic.
- */
-typedef int tOption;
-
-/**
  * Represent the new option to select the heuristic
  */
 typedef tFitness tHeuristic;
