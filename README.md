@@ -36,7 +36,15 @@ The `Problem` interface (abstract base class) defines these key methods:
 - `std::pair<tDomain, tDomain> getSolutionDomainRange()`
   → Returns domain bounds (min, max) for solution components.
   *In `ProblemIncrem`*: Returns `(false, true)` — binary domain.
+  
+- `bool isValid(const tSolution<tDomain> &solution)`
+  → Checks if a solution meets all problem constraints.
+  *Example: In `ProblemIncrem`, always returns `true` as any binary vector is valid.*
 
+- `void fix(tSolution<tDomain> &solution)`
+  → Modifies an invalid solution to meet constraints.
+  *Example: In `ProblemIncrem`, no fixing is needed, so method may be left empty.*
+```
 All metaheuristics (`RandomSearch`, `GreedySearch`) rely on these methods to evaluate, generate, and explore solutions without knowing internal structure.
 
 ### 2. **Metaheuristic Interface (`MH`)**
