@@ -90,6 +90,19 @@ public:
   virtual size_t getSolutionSize() = 0; // Get the size of each solution
   /** Return the range of domain of each element of the solution */
   virtual std::pair<tDomain, tDomain> getSolutionDomainRange() = 0;
+
+  /**
+   * Check if the solution is a valid solution
+   * @param solution to check.
+   * @return true if the solution is valid, false otherwise.
+   */
+  virtual bool isValid(const tSolution<tDomain> &solution) = 0;
+
+  /**
+   * Update the solution to fix it, if isValid returns false
+   * @param solution to fix.
+   */
+  virtual void fix(tSolution<tDomain> &solution) = 0;
 };
 
 #endif

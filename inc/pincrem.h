@@ -33,4 +33,8 @@ public:
     }
     return solution;
   }
+
+  virtual bool isValid(const tSolution<int> &solution) override { return true; }
+
+  virtual void fix(tSolution<int> &solution) override {}
 };
